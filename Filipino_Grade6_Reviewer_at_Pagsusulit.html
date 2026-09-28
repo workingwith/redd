@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="fil">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filipino Grade 6 — Reviewer at Pagsusulit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#FAF3E2;
+    --paper-line:#e7dcc2;
+    --board:#2F4A3E;
+    --board-light:#3F6152;
+    --board-dark:#22362D;
+    --marigold:#EFA53B;
+    --marigold-dark:#C9821F;
+    --banig:#B4453A;
+    --leaf:#5E8A4F;
+    --ink:#2B2118;
+    --ink-soft:#5b5040;
+    --chalk:#FDFBF3;
+    --card:#FFFDF6;
+    --correct-bg:#e6f0e0;
+    --correct-line:#5E8A4F;
+    --incorrect-bg:#fbe7e4;
+    --incorrect-line:#B4453A;
+    --shadow: 0 6px 0 rgba(43,33,24,0.08);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(43,33,24,0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color:var(--ink);
+    font-family:'Nunito', sans-serif;
+    font-size:16px;
+    line-height:1.55;
+  }
+  h1,h2,h3,h4{
+    font-family:'Baloo 2', cursive;
+    margin:0 0 .3em 0;
+    color:var(--board);
+    line-height:1.2;
+  }
+  p{margin:0 0 .8em 0;}
+  .wrap{max-width:920px;margin:0 auto;padding:0 18px 60px;}
+  .en{color:var(--ink-soft);font-style:italic;font-weight:600;}
+  .small-en{font-size:0.88em;color:var(--ink-soft);font-style:italic;}
+
+  /* ---------- Header / cover ---------- */
+  .cover{
+    background:var(--board);
+    background-image: linear-gradient(180deg, var(--board) 0%, var(--board-dark) 100%);
+    color:var(--chalk);
+    padding:38px 18px 54px;
+    position:relative;
+    overflow:hidden;
+  }
+  .bunting{
+    display:flex; justify-content:center; gap:10px; margin-bottom:22px; flex-wrap:wrap;
+  }
+  .bunting span{
+    width:26px;height:34px;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    display:inline-block;
+  }
+  .bunting span:nth-child(5n+1){background:var(--marigold);}
+  .bunting span:nth-child(5n+2){background:var(--banig);}
+  .bunting span:nth-child(5n+3){background:var(--chalk);}
+  .bunting span:nth-child(5n+4){background:var(--leaf);}
+  .bunting span:nth-child(5n+5){background:var(--marigold-dark);}
+
+  .cover-inner{max-width:820px;margin:0 auto;text-align:center;}
+  .cover h1{
+    color:var(--chalk);
+    font-size:2.3rem;
+    margin-bottom:.15em;
+  }
+  .cover .subtitle{
+    color:var(--marigold);
+    font-weight:800;
+    font-family:'Baloo 2', cursive;
+    font-size:1.05rem;
+    margin-bottom:1em;
+  }
+  .cover p{color:#EDEAD9; max-width:640px; margin-left:auto; margin-right:auto;}
+  .cover .notice{
+    max-width:640px; margin:0 auto 6px; background:rgba(255,255,255,0.08);
+    border:1px dashed rgba(255,255,255,0.35); border-radius:10px; padding:8px 14px;
+    font-size:0.88rem; color:#F3E7C9;
+  }
+
+  .name-bar{
+    margin-top:24px;
+    background:var(--chalk);
+    color:var(--ink);
+    border-radius:14px;
+    padding:14px 18px;
+    max-width:520px;
+    margin-left:auto;margin-right:auto;
+    box-shadow: var(--shadow);
+    display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:center;
+  }
+  .name-bar label{font-family:'Baloo 2',cursive; font-weight:700; color:var(--board); font-size:0.98rem;}
+  .name-bar input{
+    flex:1; min-width:180px;
+    font-family:'Nunito',sans-serif; font-size:1rem;
+    padding:8px 10px; border:2px solid var(--paper-line); border-radius:8px;
+    background:#fffefb;
+  }
+  .name-bar input:focus{outline:3px solid var(--marigold); outline-offset:1px; border-color:var(--marigold-dark);}
+
+  /* ---------- Tabs (folder-tab look) ---------- */
+  .tabbar{
+    display:flex; justify-content:center; gap:6px;
+    margin-top:-26px; position:relative; z-index:2; padding:0 12px;
+  }
+  .tabbtn{
+    font-family:'Baloo 2', cursive;
+    font-size:1.05rem;
+    font-weight:700;
+    padding:14px 26px 12px;
+    background:var(--paper-line);
+    color:var(--ink-soft);
+    border:none;
+    cursor:pointer;
+    border-radius:14px 14px 0 0;
+    transform: perspective(50px) rotateX(2deg);
+    box-shadow: 0 -2px 0 rgba(0,0,0,0.05) inset;
+  }
+  .tabbtn.active{
+    background:var(--card);
+    color:var(--board);
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.08);
+  }
+  .tabbtn:not(.active):hover{background:#efe4c8;}
+
+  .tab-content{display:none; background:var(--card); padding:28px 22px 10px; border-radius:0 0 18px 18px; box-shadow:var(--shadow);}
+  .tab-content.active{display:block;}
+  .content-shell{padding-top:0;}
+
+  /* ---------- Table of contents ---------- */
+  .toc{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+    gap:10px; margin:18px 0 30px;
+    padding:0; list-style:none;
+  }
+  .toc a{
+    display:block; text-decoration:none; color:var(--ink);
+    background:var(--paper); border:2px dashed var(--paper-line);
+    border-radius:12px; padding:10px 14px; font-weight:700;
+    font-family:'Baloo 2',cursive; font-size:0.95rem;
+  }
+  .toc a:hover{border-color:var(--marigold); color:var(--marigold-dark);}
+
+  /* ---------- Lesson card ---------- */
+  .lesson{
+    margin-bottom:34px;
+    border:2px solid var(--paper-line);
+    border-radius:16px;
+    overflow:hidden;
+    background:var(--card);
+    scroll-margin-top:16px;
+  }
+  .lesson-head{
+    background:var(--board);
+    color:var(--chalk);
+    padding:16px 20px;
+    position:relative;
+  }
+  .lesson-head h2{color:var(--chalk); font-size:1.3rem; margin-bottom:2px;}
+  .lesson-head .en{color:#CFE3D6; display:block; font-size:0.92rem;}
+  .badge{
+    display:inline-block; margin-top:8px;
+    font-family:'Baloo 2',cursive; font-size:0.78rem; font-weight:700;
+    padding:5px 12px; border-radius:20px;
+  }
+  .badge.official{background:var(--leaf); color:#fff; border:2px solid #fff3;}
+  .badge.standard{background:transparent; color:var(--marigold); border:2px dashed var(--marigold);}
+
+  .lesson-body{padding:18px 22px 22px;}
+  .lesson-body > p:first-child{margin-top:0;}
+
+  table.terms{width:100%; border-collapse:collapse; margin:14px 0 18px; font-size:0.95rem;}
+  table.terms th, table.terms td{border:1px solid var(--paper-line); padding:8px 10px; text-align:left; vertical-align:top;}
+  table.terms th{background:var(--paper); font-family:'Baloo 2',cursive; color:var(--board);}
+  table.terms tr:nth-child(even) td{background:#fffaf0;}
+
+  .examples{
+    background:var(--paper);
+    border-left:5px solid var(--marigold);
+    border-radius:0 10px 10px 0;
+    padding:10px 14px;
+    margin:12px 0;
+    font-size:0.96rem;
+  }
+  .examples strong{color:var(--board);}
+
+  .tandaan{
+    background:#eef4ea;
+    border:2px dashed var(--leaf);
+    border-radius:10px;
+    padding:10px 14px;
+    margin:12px 0;
+    font-size:0.96rem;
+  }
+  .tandaan strong{color:var(--leaf); font-family:'Baloo 2',cursive;}
+
+  /* ---------- Quiz ---------- */
+  .quiz-intro{
+    background:var(--paper); border:2px dashed var(--paper-line); border-radius:14px;
+    padding:14px 18px; margin-bottom:24px;
+  }
+  .qgroup-label{
+    font-family:'Baloo 2',cursive; color:var(--board);
+    font-size:1.05rem; margin:22px 0 10px;
+    border-bottom:3px solid var(--marigold); display:inline-block; padding-bottom:2px;
+  }
+  .question{
+    background: repeating-linear-gradient(var(--card), var(--card) 27px, var(--paper-line) 28px);
+    border:1px solid var(--paper-line);
+    border-radius:10px;
+    padding:14px 16px 12px;
+    margin-bottom:14px;
+  }
+  .question .qtext{font-weight:700; margin-bottom:8px;}
+  .choice{
+    display:flex; align-items:flex-start; gap:8px;
+    padding:6px 8px; border-radius:8px; margin-bottom:4px; cursor:pointer;
+  }
+  .choice:hover{background:rgba(239,165,59,0.14);}
+  .choice input{margin-top:4px;}
+  .choice.correct{background:var(--correct-bg); outline:2px solid var(--correct-line);}
+  .choice.incorrect{background:var(--incorrect-bg); outline:2px solid var(--incorrect-line);}
+  .fb-tag{font-family:'Baloo 2',cursive; font-size:0.82rem; font-weight:700; margin-left:6px;}
+  .fb-tag.correct{color:var(--leaf);}
+  .fb-tag.incorrect{color:var(--banig);}
+  .explain{display:none; margin-top:8px; font-size:0.9rem; color:var(--ink-soft); background:#fff; border-left:4px solid var(--marigold); padding:6px 10px; border-radius:0 8px 8px 0;}
+
+  .sa-answer{
+    width:100%; min-height:70px; font-family:'Nunito',sans-serif; font-size:1rem;
+    border:1px solid var(--paper-line); border-radius:8px; padding:10px;
+    background:#fffefb; resize:vertical;
+  }
+  .sa-answer:focus{outline:3px solid var(--marigold); outline-offset:1px;}
+  .suggested{
+    display:none; margin-top:8px; background:var(--paper);
+    border-left:4px solid var(--leaf); border-radius:0 8px 8px 0;
+    padding:8px 12px; font-size:0.92rem;
+  }
+  .suggested strong{color:var(--leaf); font-family:'Baloo 2',cursive;}
+
+  /* ---------- Buttons ---------- */
+  .btnrow{display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin:26px 0 8px;}
+  .btn{
+    font-family:'Baloo 2',cursive; font-weight:700; font-size:1.05rem;
+    padding:13px 28px; border-radius:30px; border:none; cursor:pointer;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.18);
+  }
+  .btn.primary{background:var(--marigold); color:#3a2600;}
+  .btn.primary:hover{background:var(--marigold-dark); color:#fff;}
+  .btn.ghost{background:transparent; color:var(--board); border:2px solid var(--board);}
+  .btn.ghost:hover{background:var(--board); color:#fff;}
+  .btn:active{transform:translateY(3px); box-shadow:0 1px 0 rgba(0,0,0,0.18);}
+
+  /* ---------- Score summary ---------- */
+  .score-panel{
+    display:none;
+    background:var(--board); color:var(--chalk);
+    border-radius:16px; padding:22px 24px; margin-bottom:26px;
+    text-align:center;
+  }
+  .score-panel.show{display:block;}
+  .score-panel h3{color:var(--marigold); font-size:1.5rem;}
+  .score-panel .big{font-size:2.4rem; font-family:'Baloo 2',cursive; color:#fff;}
+  .score-table{width:100%; margin-top:14px; border-collapse:collapse; font-size:0.92rem;}
+  .score-table th, .score-table td{padding:6px 8px; border-bottom:1px solid rgba(255,255,255,0.2); text-align:left;}
+  .score-table th{color:var(--marigold); font-family:'Baloo 2',cursive; font-weight:700;}
+
+  .lesson-quiz-title{
+    background:var(--board); color:var(--chalk);
+    padding:12px 18px; border-radius:14px 14px 0 0; margin-top:30px;
+  }
+  .lesson-quiz-title h3{color:var(--chalk); margin:0; font-size:1.15rem;}
+  .lesson-quiz-title .en{color:#CFE3D6; font-size:0.85rem;}
+  .lesson-quiz-body{border:2px solid var(--board); border-top:none; border-radius:0 0 14px 14px; padding:18px 18px 6px; margin-bottom:10px;}
+
+  footer{text-align:center; color:var(--ink-soft); font-size:0.85rem; padding:26px 10px 10px;}
+
+  @media (max-width:640px){
+    .cover h1{font-size:1.7rem;}
+    .tabbtn{padding:11px 16px 10px; font-size:0.92rem;}
+    .lesson-body{padding:14px;}
+  }
+
+  /* ---------- Print ---------- */
+  @media print{
+    body{background:#fff;}
+    .cover{background:#fff !important; color:#000 !important; padding:10px 0;}
+    .cover .subtitle, .cover p, .cover .notice, .bunting{display:none;}
+    .cover h1{color:#000;}
+    .name-bar{background:#fff; box-shadow:none; border:1px solid #999;}
+    .tabbar, .btnrow, .no-print{display:none !important;}
+    .tab-content{display:block !important; box-shadow:none; padding:6px 0;}
+    .lesson, .question, .lesson-quiz-body{page-break-inside:avoid; box-shadow:none;}
+    .question{background:#fff;}
+    .score-panel{color:#000; background:#fff; border:1px solid #000;}
+    .score-panel h3{color:#000;}
+    .score-panel .big{color:#000;}
+    a{color:#000; text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="bunting">
+    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+  </div>
+  <div class="cover-inner">
+    <h1>Filipino Reviewer at Pagsusulit</h1>
+    <div class="subtitle">Grade 6 · Ikaanim na Baitang</div>
+    <p>Basahin muna ang Reviewer, pagkatapos ay subukan ang Pagsusulit. Bawat salita ay may salin sa Ingles para madaling maintindihan.
+       <span class="small-en">(Read the Reviewer first, then try the Quiz. Every term includes an English translation to help you understand.)</span></p>
+    <div class="notice">📘 Aralin 1–4: batay sa aktwal na slide ng guro. Aralin 5–7: karaniwang nilalaman (walang ibinigay na slide para dito).
+    <span class="small-en">Lessons 1–4 are based on your teacher's actual slides. Lessons 5–7 use standard reference content since no slides were provided for those.</span></div>
+    <div class="name-bar">
+      <label for="studentName">Pangalan ng Mag-aaral / Student's Name:</label>
+      <input type="text" id="studentName" placeholder="Isulat dito...">
+    </div>
+  </div>
+</div>
+
+<div class="tabbar">
+  <button class="tabbtn active" id="tab-btn-reviewer" onclick="showTab('reviewer')">📖 Reviewer</button>
+  <button class="tabbtn" id="tab-btn-quiz" onclick="showTab('quiz')">📝 Kunin ang Pagsusulit</button>
+</div>
+
+<div class="wrap">
+  <div id="tab-reviewer" class="tab-content active">
+    <div class="content-shell" id="reviewer-content"></div>
+  </div>
+
+  <div id="tab-quiz" class="tab-content">
+    <div class="content-shell">
+      <div class="quiz-intro">
+        <p style="margin:0"><strong>Panuto:</strong> Sagutan ang bawat aralin. Pagkatapos sagutan ang LAHAT, pindutin ang "Suriin ang mga Sagot" sa pinakababa upang makita ang iyong marka at ang mga tamang sagot.
+        <span class="small-en">(Instructions: Answer each lesson. After answering ALL of them, press "Check My Answers" at the very bottom to see your score and the correct answers.)</span></p>
+      </div>
+      <div id="score-panel" class="score-panel"></div>
+      <div id="quiz-content"></div>
+      <div class="btnrow no-print">
+        <button class="btn primary" onclick="checkAnswers()">✅ Suriin ang mga Sagot (Check My Answers)</button>
+        <button class="btn ghost" onclick="window.print()">🖨️ I-print</button>
+        <button class="btn ghost" onclick="resetQuiz()">🔄 Simulan Muli</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>Ginawa para sa personal na pag-aaral sa bahay. · Made for personal home study use.</footer>
+
+<script>
+/* =========================================================
+   LESSON DATA
+   mc: [question, [choiceA, choiceB, choiceC, choiceD], correctIndex, explanation]
+   sa: [question, suggestedAnswer]
+   ========================================================= */
+const LESSONS = [
+{
+  id:1,
+  fil:"Aralin 1: Ang Ortograpiyang Filipino",
+  en:"Lesson 1: Filipino Orthography (Loan Words & Additional Alphabet Letters)",
+  official:true,
+  intro:"Ang <strong>ortograpiya</strong> ay kumakatawan sa tunog ng mga nakalimbag o nakasulat sa mga simbolo, titik, at letra tulad ng alpabeto ng isang wika. Ang Ortograpiyang Filipino ay binubuo ng <strong>28 titik</strong>, at binibigkas ang mga letra sa tunog-Ingles maliban sa <strong>Ññ</strong> na tunog Español o Kastila. Ang <strong>walong hiram na titik</strong> (c, f, j, ñ, q, v, x, z) ay idinagdag sa orihinal na alpabeto upang madaling maisama ang mga salita ng iba't ibang katutubong wika sa Pilipinas, mga banyagang salita, at pangngalang pantangi.",
+  introEn:"Orthography represents the sound of what is printed or written in symbols, letters, and the alphabet of a language. Filipino orthography has 28 letters, pronounced with English sounds except Ññ which uses the Spanish sound. Eight borrowed letters (c, f, j, ñ, q, v, x, z) were added to the original alphabet to easily incorporate words from the Philippines' native languages, foreign words, and proper nouns.",
+  terms:[
+    ["Ortograpiya","Orthography","Sistema na kumakatawan sa tunog ng mga simbolo, titik, at alpabeto ng isang wika"],
+    ["Alpabetong Filipino","Filipino Alphabet","Binubuo ng 28 titik; binibigkas sa tunog-Ingles maliban sa Ññ (tunog Español)"],
+    ["Walong Karagdagang Titik","Eight added letters","c, f, j, ñ, q, v, x, z — idinagdag sa orihinal na alpabeto"],
+    ["Salitang Hiram","Loan/borrowed word","Salitang hiniram mula sa ibang wika na binibigyan ng Filipinisadong baybay. Hal. chinelas → tsinelas"]
+  ],
+  subsections:[
+    {label:"Gamit ng Walong Karagdagang Titik (Uses of the Eight Added Letters)", official:true, terms:[
+      ["1. Pangngalang Pantangi","Proper nouns","Ngalan ng tao, hayop, bagay, o lugar. Hal. Josue, Xerox, Quirino, Zaffira, Vigan, Las Piñas"],
+      ["2. Salitang Katutubo","Native Philippine words","Mula sa ibang katutubong wika ng Pilipinas. Hal. Hadji, Masjid, Cañao"],
+      ["3. Salitang Hiram na Walang Katumbas","Untranslatable loan words","Salitang hiram na walang eksaktong katumbas sa Filipino. Hal. visa, jazz, quartz, cassette"],
+      ["4. Simbolong Pang-agham","Scientific symbols","Hal. Ca (calcium/kalsiyum), Fe (iron/bakal), HCl (asido muryatiko), NaCl (asin)"]
+    ]}
+  ],
+  examples:"chinelas → tsinelas · China → Tsina · piña → pinya · calendar → kalendaryo · jacket → dyaket · tricycle → traysikel · computer → kompyuter",
+  mc:[
+    ["Ano ang tawag sa sistemang kumakatawan sa tunog ng mga nakalimbag o nakasulat gamit ang mga simbolo, titik, at alpabeto ng isang wika?", ["Gramatika","Ortograpiya","Palaugnayan","Retorika"], 1, "Ang ortograpiya ang sistemang ito."],
+    ["Ilan ang titik sa alpabetong Filipino?", ["20","24","26","28"], 3, "May 28 titik ang alpabetong Filipino."],
+    ["Ilan ang karagdagang titik na idinagdag sa orihinal na alpabeto?", ["4","6","8","10"], 2, "Walong (8) karagdagang titik ang idinagdag."],
+    ["Alin sa mga sumusunod ang kabilang sa walong karagdagang titik?", ["k","ng","ñ","w"], 2, "Ang ñ ay isa sa walong karagdagang titik."],
+    ["Paano binibigkas ang mga letra ng alpabetong Filipino?", ["Tunog-Espanyol lahat","Tunog-Ingles, maliban sa Ññ na tunog Espanyol","Tunog-Tsino","Walang tiyak na paraan"], 1, "Tunog-Ingles ang karaniwang bigkas, maliban sa Ññ."],
+    ["Ang mga letrang c, f, j, ñ, q, v, x, z ay ginagamit upang:", ["Palitan ang lahat ng katutubong salita","Madaling maisama ang mga salita ng ibang wika, salitang hiram, at pangngalang pantangi","Alisin ang mga lumang titik","Walang partikular na gamit"], 1, "Ito ang layunin ng walong karagdagang titik."],
+    ["Alin ang WASTONG Filipinisadong baybay ng 'chinelas'?", ["tsinelas","chinelas","sinelas","tsinilas"], 0, "'tsinelas' ang tamang Filipinisadong baybay."],
+    ["Alin ang WASTONG Filipinisadong baybay ng 'computer'?", ["computer","kompyutir","kompyuter","kompyutor"], 2, "'kompyuter' ang tamang Filipinisadong baybay."],
+    ["Alin sa mga sumusunod ang halimbawa ng simbolong pang-agham na gumagamit ng karagdagang titik?", ["NaCl (asin)","bahay","guro","Pilipinas"], 0, "Simbolong pang-agham ang NaCl."],
+    ["Bakit mahalagang malaman ang ortograpiyang Filipino?", ["Upang makasulat nang wasto sa Filipino","Upang mahirapan sa pagbasa","Upang alisin ang mga salitang hiram","Walang dahilan"], 0, "Tumutulong ito sa tamang pagsulat ng wika."]
+  ],
+  sa:[
+    ["Ipaliwanag ang kahulugan ng ortograpiya.", "Ang ortograpiya ay ang sistemang kumakatawan sa tunog ng mga nakalimbag o nakasulat sa mga simbolo, titik, at letra ng alpabeto ng isang wika."],
+    ["Ilista ang walong karagdagang titik na idinagdag sa alpabetong Filipino.", "c, f, j, ñ, q, v, x, z"],
+    ["Magbigay ng dalawang gamit ng walong karagdagang titik at magbigay ng halimbawa sa bawat isa.", "Halimbawa: (1) para sa pangngalang pantangi tulad ng Xerox, Vigan; (2) para sa simbolong pang-agham tulad ng NaCl (asin). Tatanggapin din ang iba pang gamit na nabanggit — salitang katutubo, o salitang hiram na walang katumbas."],
+    ["Isulat ang Filipinisadong baybay ng mga salitang 'jacket' at 'tricycle'.", "dyaket; traysikel"],
+    ["Bakit mahalagang matutong magbaybay nang wasto sa Filipino ng mga salitang hiram?", "Upang tuluyang maging bahagi ng talasalitaang Filipino ang mga salitang ito, at mas madaling gamitin at unawain ng mga Pilipino sa pagsulat at pagbasa."]
+  ]
+},
+{
+  id:2,
+  fil:"Aralin 2: Pagbuo ng Salita",
+  en:"Lesson 2: Word Formation (Root Words & Affixes)",
+  official:true,
+  intro:"Ang <strong>salita</strong> ay yunit ng wika na binubuo ng pinagsama-samang mga pantig. Ang <strong>salitang-ugat</strong> ay payak na salitang maaaring dagdagan ng panlapi (Hal. bundok, alok, ganda, bait, saya, bata, ina, aklat, lapit). Ang <strong>panlapi</strong> ay idinaragdag sa salitang-ugat upang makabuo ng panibagong salita na may panibagong kahulugan (Hal. ganda → kagandahan).",
+  introEn:"A word (salita) is a unit of language formed by combining syllables. A root word (salitang-ugat) is a simple word that can be given an affix (e.g., bundok, alok, ganda, bait, saya, bata, ina, aklat, lapit). An affix (panlapi) is added to a root word to form a new word with a new meaning (e.g., ganda → kagandahan).",
+  terms:[
+    ["Salita","Word","Yunit ng wika na binubuo ng pinagsama-samang pantig"],
+    ["Salitang-ugat","Root word","Payak na salitang maaaring dagdagan ng panlapi. Hal. bundok, alok, ganda, bait, saya, bata, ina, aklat, lapit"],
+    ["Panlapi","Affix","Idinaragdag sa salitang-ugat upang makabuo ng bagong salita/kahulugan. Hal. alis → inalis, ganda → kagandahan"],
+    ["Unlapi","Prefix","Panlaping na-, um-, o ma- na nasa unahan ng salitang-ugat. Hal. inom → uminom, saya → masaya, ligo → naligo, bait → mabait"],
+    ["Gitlapi","Infix","Panlaping -um- o -in- na isinisingit sa gitna ng salitang-ugat. Hal. kain → kumain, langoy → lumangoy, sagot → sumagot"],
+    ["Hulapi","Suffix","Panlaping -in, -hin, o -an na nasa hulihan ng salitang-ugat. Hal. samba → sambahin, kain → kainin, ina → inahin, sampay → sampayan"],
+    ["Kabilaan","Circumfix","Panlaping nasa unahan AT hulihan ng salitang-ugat nang sabay. Hal. ganda → kagandahan, bata → kabataan, bundok → kabundukan"]
+  ],
+  mc:[
+    ["Ano ang tawag sa yunit ng wika na binubuo ng pinagsama-samang mga pantig?", ["Pantig","Salita","Titik","Bantas"], 1, "Ang salita ay binubuo ng pinagsamang pantig."],
+    ["Ano ang tawag sa payak na salitang maaaring dagdagan ng panlapi?", ["Salitang Hiram","Salitang-ugat","Salitang Tambalan","Salitang Pantangi"], 1, "Ito ang salitang-ugat."],
+    ["Piliin ang halimbawa ng salitang-ugat.", ["kagandahan","ganda","gumanda","magaganda"], 1, "'ganda' ang payak na salitang-ugat."],
+    ["Ano ang tawag sa idinaragdag sa salitang-ugat upang makabuo ng bagong salita na may bagong kahulugan?", ["Pantig","Panlapi","Bantas","Tuldik"], 1, "Ito ang panlapi."],
+    ["Ang panlaping na-, um-, o ma- na nasa UNAHAN ng salitang-ugat ay tinatawag na:", ["Hulapi","Gitlapi","Unlapi","Kabilaan"], 2, "Ito ang Unlapi."],
+    ["Piliin ang halimbawa ng salitang gumagamit ng Unlapi.", ["kumain","sambahin","mabait","kagandahan"], 2, "'mabait' = ma- + bait, isang Unlapi."],
+    ["Ang panlaping -um- o -in- na ISINISINGIT sa GITNA ng salitang-ugat ay tinatawag na:", ["Unlapi","Gitlapi","Hulapi","Kabilaan"], 1, "Ito ang Gitlapi."],
+    ["Piliin ang halimbawa ng salitang gumagamit ng Gitlapi.", ["mabait","kumain","sambahin","kabataan"], 1, "'kumain' = k+um+ain, isang Gitlapi."],
+    ["Ang panlaping -in, -hin, o -an na nasa HULIHAN ng salitang-ugat ay tinatawag na:", ["Unlapi","Gitlapi","Hulapi","Kabilaan"], 2, "Ito ang Hulapi."],
+    ["Ang panlaping nasa UNAHAN AT HULIHAN ng salitang-ugat nang sabay ay tinatawag na:", ["Unlapi","Gitlapi","Hulapi","Kabilaan"], 3, "Ito ang Kabilaan (circumfix)."]
+  ],
+  sa:[
+    ["Ipaliwanag ang pagkakaiba ng salita at salitang-ugat.", "Ang salita ay pangkalahatang yunit ng wika na binubuo ng pinagsamang pantig, samantalang ang salitang-ugat ay ang payak na anyo ng salita bago pa ito dagdagan ng panlapi."],
+    ["Ilista ang apat na uri ng panlapi.", "Unlapi, Gitlapi, Hulapi, Kabilaan"],
+    ["Tukuyin ang salitang-ugat at panlapi sa salitang 'kabaitan'.", "Salitang-ugat: bait; Panlapi: ka- at -an (Kabilaan)"],
+    ["Tukuyin ang salitang-ugat at panlapi sa salitang 'sagutin'.", "Salitang-ugat: sagot; Panlapi: -in (Hulapi)"],
+    ["Gumawa ng isang salita gamit ang salitang-ugat na 'ganda' at ang panlaping Kabilaan.", "kagandahan (ka- + ganda + -han)"]
+  ]
+},
+{
+  id:3,
+  fil:"Aralin 3: Bahagi ng Pangungusap",
+  en:"Lesson 3: Parts of the Sentence",
+  official:true,
+  intro:"Ang <strong>pangungusap</strong> ay pangkat ng mga salitang may kumpletong diwa o kaisipan. May dalawang bahagi ang pangungusap: ang <strong>Simuno (o Paksa)</strong> — ang tao, bagay, o pook na pinag-uusapan, karaniwang ginagamitan ng mga panandang <em>ang, ang mga, si,</em> o <em>sina</em> — at ang <strong>Panaguri</strong>, na nagsasabi kung ano ang ginagawa o kalagayan ng simuno.",
+  introEn:"A sentence (pangungusap) is a group of words with a complete thought. It has two parts: the Subject (Simuno/Paksa) — the person, thing, or place being talked about, usually marked with ang, ang mga, si, or sina — and the Predicate (Panaguri), which tells what the subject does or is like.",
+  terms:[
+    ["Pangungusap","Sentence","Pangkat ng salitang may kumpletong diwa o kaisipan"],
+    ["Simuno / Paksa","Subject","Tao, bagay, o pook na pinag-uusapan; ginagamitan ng ang, ang mga, si, sina"],
+    ["Panaguri","Predicate","Nagsasabi ng ginagawa o kalagayan ng simuno"]
+  ],
+  examples:"\"Si Andrea ay nanalo sa patimpalak.\" → Simuno: Si Andrea · Panaguri: ay nanalo sa patimpalak &nbsp;&nbsp;|&nbsp;&nbsp; \"Ang aking kababata ay darating sa susunod na linggo.\" → Simuno: Ang aking kababata · Panaguri: ay darating sa susunod na linggo",
+  mc:[
+    ["Ano ang tawag sa pangkat ng mga salitang may kumpletong diwa o kaisipan?", ["Parirala","Pangungusap","Pantig","Salita"], 1, "Ito ang pangungusap."],
+    ["Ilan ang bahagi ng pangungusap?", ["2","3","4","5"], 0, "May dalawang bahagi: Simuno at Panaguri."],
+    ["Ang bahaging tumutukoy sa tao, bagay, o pook na pinag-uusapan sa pangungusap ay tinatawag na:", ["Panaguri","Simuno (o Paksa)","Pandiwa","Pang-uri"], 1, "Ito ang Simuno o Paksa."],
+    ["Ang bahaging nagsasabi ng ginagawa o kalagayan ng simuno ay tinatawag na:", ["Simuno","Panaguri","Pangngalan","Pang-abay"], 1, "Ito ang Panaguri."],
+    ["Alin sa mga sumusunod ang HINDI karaniwang panandang ginagamit sa simuno?", ["ang","si","sina","na"], 3, "Ang 'na' ay hindi panandang pansimuno; ito'y ibang bahagi ng pananalita."],
+    ["Sa pangungusap na 'Masayang nakilahok sa paligsahan sina Gloria at Gemma,' ano ang simuno?", ["Masayang nakilahok sa paligsahan","sina Gloria at Gemma","sa paligsahan","Masayang"], 1, "'sina Gloria at Gemma' ang simuno."],
+    ["Sa pangungusap na 'Si Andrea ay nagsasaliksik tungkol sa buhay ni Jose Rizal,' ang bahaging 'Si Andrea' ay:", ["Simuno","Panaguri","Pang-uri","Pandiwa"], 0, "'Si Andrea' ang simuno ng pangungusap."],
+    ["Sa pangungusap na 'Malakas na pinalakpakan ang talumpati ni Pangulong Aquino,' ang bahaging 'Malakas na pinalakpakan' ay:", ["Simuno","Panaguri","Pantangi","Pambalana"], 1, "Ito ang panaguri — sinasabi nito ang ginagawa."],
+    ["Sa pangungusap na 'Ang bawat kasapi ng samahan ay nag-ambag ng kanilang oras, talino, at talento,' ang bahaging 'ay nag-ambag ng kanilang oras, talino, at talento' ay:", ["Simuno","Panaguri","Pantangi","Pambalana"], 1, "Ito ang Panaguri."],
+    ["Bakit mahalaga ang simuno at panaguri sa isang pangungusap?", ["Upang mahaba ang pangungusap","Upang kumpleto ang diwa o kaisipang ipinahahayag nito","Upang magkaroon ng bantas","Walang kabuluhan"], 1, "Kumpleto ang kaisipan kapag magkaroon ng simuno at panaguri."]
+  ],
+  sa:[
+    ["Ibigay ang kahulugan ng simuno at panaguri.", "Ang Simuno (o Paksa) ay ang tao, bagay, o pook na pinag-uusapan sa pangungusap, habang ang Panaguri ay ang bahaging nagsasabi ng ginagawa o kalagayan ng simuno."],
+    ["Tukuyin ang simuno at panaguri sa pangungusap na 'Ang buong klase ni Bb. Rica ay magkakaroon ng lakbay-aral sa Mind Museum.'", "Simuno: Ang buong klase ni Bb. Rica; Panaguri: ay magkakaroon ng lakbay-aral sa Mind Museum"],
+    ["Sa pangungusap na 'Puno ng aral ang kuwento na isinalaysay ni Lolo Berting,' ano ang panaguri?", "'Puno ng aral' ang panaguri."],
+    ["Gumawa ng isang pangungusap gamit ang 'si' bilang panandang pambungad sa simuno.", "Sagot ay maaaring iba-iba; halimbawa: 'Si Maria ay masipag mag-aral.'"],
+    ["Bakit mahalagang matutong tukuyin ang simuno at panaguri sa isang pangungusap?", "Upang maunawaan nang lubos ang kaisipang ipinapahayag ng pangungusap, at upang makabuo ng sariling malinaw na pangungusap."]
+  ]
+},
+{
+  id:4,
+  fil:"Aralin 4: Ayos ng Pangungusap",
+  en:"Lesson 4: Sentence Order",
+  official:true,
+  intro:"May dalawang ayos ng pangungusap. Sa <strong>Karaniwang Ayos</strong>, ang Panaguri ay nauuna sa Simuno, at walang gamit na \"ay\" (Hal. \"Naglalaro sa parke ang mga bata.\"). Sa <strong>Di-karaniwang Ayos</strong> naman, ang Simuno ang nauuna, sinusundan ng \"ay,\" bago ang Panaguri (Hal. \"Ang mga bata ay naglalaro sa parke.\").",
+  introEn:"There are two sentence orders. In Karaniwang Ayos (natural order), the Predicate comes before the Subject, with no \"ay\" (e.g., \"Naglalaro sa parke ang mga bata\" — Playing in the park are the children). In Di-karaniwang Ayos (inverted order), the Subject comes first, followed by \"ay,\" then the Predicate (e.g., \"Ang mga bata ay naglalaro sa parke\" — The children are playing in the park).",
+  terms:[
+    ["Karaniwang Ayos","Natural order","Panaguri + Simuno, walang 'ay'. Hal. Naglalaro sa parke ang mga bata."],
+    ["Di-karaniwang Ayos","Inverted order","Simuno + ay + Panaguri. Hal. Ang mga bata ay naglalaro sa parke."]
+  ],
+  tandaan:"Karaniwang ayos = Panaguri + Simuno &nbsp;&nbsp;|&nbsp;&nbsp; Di-karaniwang ayos = Simuno + ay + Panaguri",
+  examples:"Karaniwang Ayos: Naglalaro sa parke ang mga bata · Masipag mag-aral si Jilliane · Nakalagay sa ibabaw ng mesa ang aklat &nbsp;&nbsp;|&nbsp;&nbsp; Di-karaniwang Ayos: Ang mga mag-aaral ay umawit sa harap ng klase · Si Bb. Jade ay nagtuturo sa aming klase · Ang guro ay nagpapaliwanag ng aralin",
+  mc:[
+    ["Ilan ang ayos ng pangungusap?", ["2","3","4","5"], 0, "May dalawang ayos: Karaniwan at Di-karaniwan."],
+    ["Sa Karaniwang Ayos, alin ang nauunang bahagi ng pangungusap?", ["Simuno","Panaguri","Pareho silang nauuna","Wala sa nabanggit"], 1, "Ang Panaguri ang nauuna sa Karaniwang Ayos."],
+    ["Sa Di-karaniwang Ayos, alin ang nauunang bahagi ng pangungusap?", ["Panaguri","Simuno","Pareho silang nauuna","Wala sa nabanggit"], 1, "Ang Simuno ang nauuna sa Di-karaniwang Ayos."],
+    ["Alin ang halimbawa ng Karaniwang Ayos?", ["Ang mga bata ay naglalaro sa parke.","Naglalaro sa parke ang mga bata.","Si Bb. Jade ay nagtuturo sa aming klase.","Ang guro ay nagpapaliwanag ng aralin."], 1, "Panaguri muna ('Naglalaro sa parke') bago ang Simuno."],
+    ["Alin ang halimbawa ng Di-karaniwang Ayos?", ["Naglalaro sa parke ang mga bata.","Masipag mag-aral si Jilliane.","Ang mga mag-aaral ay umawit sa harap ng klase.","Nakalagay sa ibabaw ng mesa ang aklat."], 2, "Simuno muna ('Ang mga mag-aaral'), may 'ay', bago ang Panaguri."],
+    ["Sa Di-karaniwang Ayos, anong salita ang ginagamit bilang pang-ugnay sa pagitan ng Simuno at Panaguri?", ["ng","ay","sa","na"], 1, "Ang 'ay' ang pang-ugnay sa Di-karaniwang Ayos."],
+    ["Baguhin sa Di-karaniwang Ayos ang pangungusap na 'Masipag mag-aral si Jilliane.'", ["Si Jilliane ay masipag mag-aral.","Mag-aral masipag si Jilliane.","Jilliane si masipag mag-aral.","Masipag si Jilliane mag-aral."], 0, "'Si Jilliane ay masipag mag-aral.' — Simuno muna, may 'ay'."],
+    ["Baguhin sa Karaniwang Ayos ang pangungusap na 'Ang guro ay nagpapaliwanag ng aralin.'", ["Nagpapaliwanag ng aralin ang guro.","Ang nagpapaliwanag ay guro ng aralin.","Aralin nagpapaliwanag ang guro.","Guro ang nagpapaliwanag ng aralin ang."], 0, "'Nagpapaliwanag ng aralin ang guro.' — Panaguri muna, walang 'ay'."],
+    ["Alin ang TAMANG paglalarawan sa Karaniwang Ayos?", ["Simuno + ay + Panaguri","Panaguri + Simuno, walang 'ay'","Panaguri + ay + Simuno","Simuno + Panaguri, walang 'ay'"], 1, "Ito ang tamang anyo ng Karaniwang Ayos."],
+    ["Alin ang TAMANG paglalarawan sa Di-karaniwang Ayos?", ["Panaguri + Simuno","Simuno + ay + Panaguri","Simuno + Panaguri, walang 'ay'","Panaguri + ay + Simuno"], 1, "Ito ang tamang anyo ng Di-karaniwang Ayos."]
+  ],
+  sa:[
+    ["Ipaliwanag ang pagkakaiba ng Karaniwang Ayos at Di-karaniwang Ayos.", "Sa Karaniwang Ayos, nauuna ang Panaguri bago ang Simuno, walang gamit na 'ay' (hal. Naglalaro sa parke ang mga bata). Sa Di-karaniwang Ayos naman, nauuna ang Simuno, sinusundan ng 'ay,' bago ang Panaguri (hal. Ang mga bata ay naglalaro sa parke)."],
+    ["Baguhin sa Di-karaniwang Ayos ang pangungusap na 'Nakalagay sa ibabaw ng mesa ang aklat.'", "Ang aklat ay nakalagay sa ibabaw ng mesa."],
+    ["Baguhin sa Karaniwang Ayos ang pangungusap na 'Si Bb. Jade ay nagtuturo sa aming klase.'", "Nagtuturo sa aming klase si Bb. Jade."],
+    ["Gumawa ng isang pangungusap gamit ang Karaniwang Ayos.", "Sagot ay maaaring iba-iba; halimbawa: 'Kumakain ng almusal ang mga bata.'"],
+    ["Bakit mahalagang malaman ang dalawang ayos ng pangungusap?", "Upang magkaroon ng iba't ibang paraan sa pagbuo ng pangungusap, at mapaghusay ang estilo sa pagsusulat o pagsasalita."]
+  ]
+},
+{
+  id:5,
+  fil:"Aralin 5: Uri ng Pangngalan (kasama ang Alamat)",
+  en:"Lesson 5: Kinds of Noun (with Legend as reading context)",
+  official:false,
+  intro:"Ang <strong>alamat</strong> ay isang uri ng panitikang bayan (oral na panitikan) na naglalahad ng pinagmulan ng isang bagay, lugar, o pangyayari, karaniwang may elemento ng kababalaghan (hal. Alamat ng Pinya). Sa Grade 6, dinaragdagan ang aral tungkol sa pangngalan ng <strong>Pangngalang Lipon/Kolektibo</strong> — tumutukoy sa grupo ng tao, bagay, o hayop bilang iisang yunit — bukod sa Pambalana, Pantangi, Kongkreto, at Di-kongkreto na natutunan na noong mas mababang baitang.",
+  introEn:"A legend (alamat) is a form of oral literature that explains the origin of a thing, place, or event, usually with an element of the supernatural (e.g., the Legend of the Pineapple). In Grade 6, the noun lesson adds Collective Noun (Pangngalang Lipon) — referring to a group of people, things, or animals as one unit — on top of Common, Proper, Concrete, and Abstract nouns learned in earlier grades.",
+  terms:[
+    ["Alamat","Legend","Panitikang bayan tungkol sa pinagmulan ng isang bagay/lugar, may kababalaghan"],
+    ["Pambalana","Common noun","Karaniwang ngalan; maliit na titik. Hal. guro, bansa"],
+    ["Pantangi","Proper noun","Tiyak na ngalan; malaking titik. Hal. Pilipinas, Jose Rizal"],
+    ["Kongkreto","Concrete noun","Nakikita/nahahawakan. Hal. mesa, bulaklak"],
+    ["Di-kongkreto","Abstract noun","Hindi nakikita/nahahawakan. Hal. pag-ibig, katotohanan"],
+    ["Pangngalang Lipon/Kolektibo","Collective noun","Grupo bilang iisang yunit. Hal. kawan, pulutong, sangkatauhan, bulwagan"]
+  ],
+  examples:"Halimbawa ng Alamat: Alamat ng Pinya, Alamat ng Bulkang Mayon, Alamat ng Pitong Pulo · Halimbawa ng Pangngalang Lipon: kawan (ng tupa), pulutong (ng tao), sangkatauhan",
+  mc:[
+    ["Ano ang tawag sa isang uri ng panitikang bayan na naglalahad ng pinagmulan ng isang bagay, lugar, o pangyayari, na karaniwang may elemento ng kababalaghan?", ["Pabula","Alamat","Epiko","Talumpati"], 1, "Ito ang alamat."],
+    ["Alin sa mga sumusunod ang halimbawa ng isang alamat?", ["Alamat ng Pinya","Balitang Pambatas","Ulat-Pananaliksik","Sanaysay"], 0, "Ang Alamat ng Pinya ay isang kilalang alamat."],
+    ["Ang alamat ay bahagi ng anong uri ng panitikan?", ["Panitikang Pasulat lamang","Panitikang Bayan/Oral na Panitikan","Teknikal na Sulatin","Pormal na Ulat"], 1, "Panitikang bayan/oral ito, ipinasa-pasa sa bibig ng mga tao."],
+    ["Ilan ang uri ng pangngalan na natutunan simula pa noong Grade 4 (Pambalana at Pantangi) na tinatalakay pa rin?", ["1","2","3","4"], 1, "Dalawa: Pambalana at Pantangi."],
+    ["Ang pangngalang tumutukoy sa grupo ng mga tao, bagay, o hayop bilang iisang yunit ay tinatawag na:", ["Pangngalang Pambalana","Pangngalang Lipon/Kolektibo","Pangngalang Pantangi","Pangngalang Kongkreto"], 1, "Ito ang Pangngalang Lipon/Kolektibo."],
+    ["Piliin ang halimbawa ng Pangngalang Lipon.", ["guro","kawan","Pilipinas","pag-ibig"], 1, "'kawan' ay isang grupo bilang iisang yunit."],
+    ["Ang salitang 'sangkatauhan' ay halimbawa ng:", ["Pangngalang Pantangi","Pangngalang Lipon","Pangngalang Di-kongkreto","Pangngalang Panlalaki"], 1, "Tumutukoy ito sa lahat ng tao bilang isang grupo."],
+    ["Ang salitang 'bulwagan' (bilang grupo ng mga tao sa isang pagtitipon) ay maaaring halimbawa ng:", ["Pangngalang Lipon","Pangngalang Pantangi","Panlalaki","Walang Kasarian"], 0, "Maaari itong tumukoy sa grupo ng mga tao."],
+    ["Alin ang pares ng Pambalana at Pantangi na magkatugma?", ["bansa - Pilipinas","guro - kawan","bulwagan - sangkatauhan","pag-ibig - kagandahan"], 0, "'bansa' (Pambalana) at 'Pilipinas' (Pantangi) ay magkatugma."],
+    ["Bakit mahalagang pag-aralan ang iba't ibang uri ng pangngalan?", ["Upang mas maunawaan ang gamit ng mga salita sa pangungusap","Upang mahirapan sa pagbasa","Upang alisin ang mga salitang-ugat","Walang dahilan"], 0, "Nakakatulong ito sa tamang paggamit ng pangngalan."]
+  ],
+  sa:[
+    ["Ano ang alamat at magbigay ng isang halimbawa nito.", "Ang alamat ay isang uri ng panitikang bayan na naglalahad ng pinagmulan ng isang bagay, lugar, o pangyayari, karaniwang may elemento ng kababalaghan. Halimbawa: Alamat ng Pinya, Alamat ng Bulkang Mayon."],
+    ["Ipaliwanag ang Pangngalang Lipon at magbigay ng isang halimbawa.", "Ang Pangngalang Lipon ay tumutukoy sa grupo ng mga tao, bagay, o hayop bilang iisang yunit. Halimbawa: kawan (ng tupa), pulutong (ng tao)."],
+    ["Ilista ang mga uri ng pangngalan na iyong natutunan.", "Pambalana, Pantangi, Kongkreto, Di-kongkreto, at Lipon/Kolektibo."],
+    ["Bakit itinuturing na alamat ang isang kuwento tungkol sa pinagmulan ng isang prutas o lugar?", "Dahil layunin nitong ipaliwanag ang pinagmulan ng isang bagay o lugar sa pamamagitan ng kuwentong may elemento ng kababalaghan, na ipinasa-pasa sa bibig ng mga tao noon."],
+    ["Gumawa ng isang pangungusap gamit ang isang Pangngalang Lipon.", "Sagot ay maaaring iba-iba; halimbawa: 'Dumating ang kawan ng ibon sa parang.'"]
+  ]
+},
+{
+  id:6,
+  fil:"Aralin 6: Kayarian ng Pangungusap",
+  en:"Lesson 6: Sentence Structure/Construction",
+  official:false,
+  intro:"Ang <strong>kayarian ng pangungusap</strong> ay ang istruktura nito batay sa bilang at uri ng sugnay. May apat na uri: <strong>Payak</strong> (isang malayang sugnay), <strong>Tambalan</strong> (dalawa o higit pang malayang sugnay na pinagdugtong ng pangatnig), <strong>Hugnayan</strong> (may malaya at di-malayang sugnay), at <strong>Langkapan</strong> (kombinasyon ng Tambalan at Hugnayan).",
+  introEn:"Sentence structure (kayarian) is classified by the number and kind of clauses. Four kinds: Simple (Payak — one independent clause), Compound (Tambalan — two or more independent clauses joined by a conjunction), Complex (Hugnayan — independent + dependent clause), and Compound-Complex (Langkapan — a combination of Compound and Complex).",
+  terms:[
+    ["Payak na Pangungusap","Simple sentence","Isang malayang sugnay; isang simuno at panaguri. Hal. \"Naglalaro ang mga bata.\""],
+    ["Tambalang Pangungusap","Compound sentence","Dalawa o higit pang payak na pangungusap, pinagdugtong ng pangatnig (at, ngunit, o). Hal. \"Nag-aral si Ana at nanalo siya.\""],
+    ["Hugnayang Pangungusap","Complex sentence","Malayang sugnay + di-malayang sugnay, pangatnig (dahil, kung, nang). Hal. \"Nanalo si Ana dahil nag-aral siya.\""],
+    ["Langkapang Pangungusap","Compound-complex sentence","Kombinasyon ng Tambalan at Hugnayan. Hal. \"Nag-aral nang mabuti si Ana, at nanalo siya dahil pinaghandaan niya ito.\""]
+  ],
+  mc:[
+    ["Ano ang tawag sa istruktura o pagkakabuo ng isang pangungusap batay sa bilang ng sugnay nito?", ["Ayos ng Pangungusap","Kayarian ng Pangungusap","Uri ng Pangngalan","Anyo ng Salita"], 1, "Ito ang Kayarian ng Pangungusap."],
+    ["Ang pangungusap na may iisang kaisipang buo, may isang simuno at isang panaguri, ay tinatawag na:", ["Tambalang Pangungusap","Payak na Pangungusap","Hugnayang Pangungusap","Langkapang Pangungusap"], 1, "Ito ang Payak na Pangungusap."],
+    ["Ang pangungusap na binubuo ng dalawa o higit pang payak na pangungusap na pinagdugtong ng pangatnig tulad ng 'at' o 'ngunit' ay tinatawag na:", ["Payak","Tambalan","Hugnayan","Langkapan"], 1, "Ito ang Tambalang Pangungusap."],
+    ["Ang pangungusap na may isang malayang sugnay at isa o higit pang di-malayang sugnay ay tinatawag na:", ["Payak","Tambalan","Hugnayan","Langkapan"], 2, "Ito ang Hugnayang Pangungusap."],
+    ["Ang pangungusap na kombinasyon ng Tambalan at Hugnayan ay tinatawag na:", ["Payak","Tambalan","Hugnayan","Langkapan"], 3, "Ito ang Langkapang Pangungusap."],
+    ["Piliin ang halimbawa ng Payak na Pangungusap.", ["Naglalaro ang mga bata.","Nag-aral si Ana at nanalo siya.","Nanalo si Ana dahil nag-aral siya.","Kumain si Ben at natulog siya dahil pagod na pagod na siya."], 0, "May isang simuno at isang panaguri lamang."],
+    ["Piliin ang halimbawa ng Tambalang Pangungusap.", ["Naglalaro ang mga bata.","Nag-aral si Ana at nanalo siya sa paligsahan.","Nanalo si Ana dahil nag-aral siya nang mabuti.","Umuulan."], 1, "Dalawang malayang sugnay, pinagdugtong ng 'at'."],
+    ["Piliin ang halimbawa ng Hugnayang Pangungusap.", ["Naglalaro ang mga bata.","Nag-aral si Ana at nanalo siya.","Nanalo si Ana dahil nag-aral siya nang mabuti.","Umuulan at humangin."], 2, "May malaya at di-malayang sugnay, gamit ang 'dahil'."],
+    ["Alin sa mga sumusunod ang pangatnig na ginagamit sa Hugnayang Pangungusap?", ["at","o","dahil","ngunit"], 2, "'dahil' ay ginagamit sa Hugnayang Pangungusap."],
+    ["Alin ang halimbawa ng Langkapang Pangungusap?", ["Naglalaro ang mga bata.","Nag-aral nang mabuti si Ana, at nanalo siya dahil pinaghandaan niya ito.","Kumain si Ben.","Umuulan."], 1, "Kombinasyon ito ng Tambalan at Hugnayan."]
+  ],
+  sa:[
+    ["Ilista ang apat na uri ng kayarian ng pangungusap.", "Payak, Tambalan, Hugnayan, Langkapan"],
+    ["Ipaliwanag ang pagkakaiba ng Tambalan at Hugnayang Pangungusap.", "Ang Tambalang Pangungusap ay binubuo ng dalawa o higit pang payak na pangungusap (malayang sugnay) na pinagdugtong ng pangatnig tulad ng 'at' o 'ngunit,' samantalang ang Hugnayang Pangungusap ay may isang malayang sugnay at isa o higit pang di-malayang sugnay, pinag-uugnay ng pangatnig tulad ng 'dahil' o 'kung.'"],
+    ["Gumawa ng isang Payak na Pangungusap.", "Sagot ay maaaring iba-iba; halimbawa: 'Kumakain ang aso.'"],
+    ["Gumawa ng isang Tambalang Pangungusap gamit ang pangatnig na 'at.'", "Sagot ay maaaring iba-iba; halimbawa: 'Naligo si Juan at nagbihis siya.'"],
+    ["Ipaliwanag kung ano ang Langkapang Pangungusap at magbigay ng isang halimbawa.", "Ang Langkapang Pangungusap ay kombinasyon ng Tambalan at Hugnayan; may dalawa o higit pang malayang sugnay at isa o higit pang di-malayang sugnay. Halimbawa: 'Nag-aral nang mabuti si Ana, at nanalo siya dahil pinaghandaan niya ito.'"]
+  ]
+},
+{
+  id:7,
+  fil:"Aralin 7: Mga Uri ng Pangungusap Ayon sa Gamit",
+  en:"Lesson 7: Kinds of Sentences According to Use",
+  official:false,
+  intro:"May apat na uri ang pangungusap ayon sa gamit: <strong>Pasalaysay</strong> (naglalahad ng kaisipan/katotohanan, tuldok), <strong>Patanong</strong> (naghahain ng tanong, tandang pananong), <strong>Padamdam</strong> (nagpapahayag ng matinding damdamin, tandang padamdam), at <strong>Pautos/Palamuno</strong> (nag-uutos o humihiling, tuldok o tandang padamdam).",
+  introEn:"There are four kinds of sentences according to use: Declarative (Pasalaysay — states a thought/fact, ends in a period), Interrogative (Patanong — asks a question, ends in a question mark), Exclamatory (Padamdam — expresses strong emotion, ends in an exclamation point), and Imperative (Pautos — commands or requests, ends in a period or exclamation point).",
+  terms:[
+    ["Pasalaysay","Declarative","Naglalahad ng kaisipan/katotohanan; tuldok. Hal. \"Maganda ang bulaklak.\""],
+    ["Patanong","Interrogative","Naghahain ng tanong; tandang pananong. Hal. \"Saan ka pupunta?\""],
+    ["Padamdam","Exclamatory","Nagpapahayag ng matinding damdamin; tandang padamdam. Hal. \"Ang ganda ng tanawin!\""],
+    ["Pautos/Palamuno","Imperative","Nag-uutos/humihiling; tuldok o tandang padamdam. Hal. \"Isara mo ang pinto.\""]
+  ],
+  mc:[
+    ["Ilan ang uri ng pangungusap ayon sa gamit?", ["2","3","4","5"], 2, "May apat na uri."],
+    ["Ang pangungusap na naglalahad ng isang kaisipan o katotohanan ay tinatawag na:", ["Patanong","Pasalaysay","Padamdam","Pautos"], 1, "Ito ang Pasalaysay."],
+    ["Ang pangungusap na naghahain ng tanong ay tinatawag na:", ["Pasalaysay","Patanong","Padamdam","Pautos"], 1, "Ito ang Patanong."],
+    ["Ang pangungusap na nagpapahayag ng matinding damdamin ay tinatawag na:", ["Pasalaysay","Patanong","Padamdam","Pautos"], 2, "Ito ang Padamdam."],
+    ["Ang pangungusap na nag-uutos, nagpapakiusap, o humihiling ay tinatawag na:", ["Pasalaysay","Patanong","Padamdam","Pautos/Palamuno"], 3, "Ito ang Pautos/Palamuno."],
+    ["Anong bantas ang karaniwang ginagamit sa dulo ng pangungusap na Pasalaysay?", ["Tuldok","Tandang Pananong","Tandang Padamdam","Kuwit"], 0, "Ang Tuldok ang ginagamit sa Pasalaysay."],
+    ["Anong bantas ang ginagamit sa dulo ng pangungusap na Patanong?", ["Tuldok","Tandang Pananong","Tandang Padamdam","Kuwit"], 1, "Ang Tandang Pananong ang ginagamit sa Patanong."],
+    ["Piliin ang halimbawa ng Pangungusap na Padamdam.", ["Maganda ang bulaklak.","Saan ka pupunta?","Ang ganda ng tanawin!","Isara mo ang pinto."], 2, "'Ang ganda ng tanawin!' ay Padamdam."],
+    ["Piliin ang halimbawa ng Pangungusap na Pautos.", ["Maganda ang bulaklak.","Isara mo ang pinto.","Saan ka pupunta?","Ang ganda ng tanawin!"], 1, "'Isara mo ang pinto.' ay Pautos."],
+    ["Alin ang pangungusap na Pasalaysay?", ["Kumusta ka?","Tumigil ka!","Maganda ang bulaklak.","Isara mo ang bintana."], 2, "'Maganda ang bulaklak.' ay Pasalaysay."]
+  ],
+  sa:[
+    ["Ilista ang apat na uri ng pangungusap ayon sa gamit.", "Pasalaysay, Patanong, Padamdam, Pautos/Palamuno"],
+    ["Gumawa ng isang pangungusap na Padamdam.", "Sagot ay maaaring iba-iba; halimbawa: 'Ang saya ng piyesta!'"],
+    ["Gumawa ng isang pangungusap na Patanong.", "Sagot ay maaaring iba-iba; halimbawa: 'Ano ang oras ngayon?'"],
+    ["Ipaliwanag ang pagkakaiba ng Pasalaysay at Pautos na pangungusap.", "Ang Pasalaysay ay naglalahad lamang ng kaisipan o katotohanan (hal. Maganda ang bulaklak), samantalang ang Pautos ay nag-uutos, nagpapakiusap, o humihiling ng isang kilos (hal. Isara mo ang pinto)."],
+    ["Bakit mahalagang malaman ang iba't ibang uri ng pangungusap ayon sa gamit?", "Upang maipahayag nang wasto ang layunin ng pangungusap — kung ito ba ay naglalahad, nagtatanong, nagpapahayag ng damdamin, o nag-uutos — at magamit ang tamang bantas."]
+  ]
+}
+];
+
+/* =========================================================
+   RENDER: REVIEWER TAB
+   ========================================================= */
+function badgeHtml(official){
+  if(official===true) return '<span class="badge official">📘 Mula sa Slide ng Guro (From teacher\\u2019s slides)</span>';
+  if(official==="mixed") return '<span class="badge standard">📝 Bahagi: Karaniwang Nilalaman (Some parts: standard reference content)</span>';
+  return '<span class="badge standard">📝 Karaniwang Nilalaman (Standard content — no slides provided for this lesson)</span>';
+}
+
+function renderReviewer(){
+  let toc = '<ul class="toc">';
+  LESSONS.forEach(l=>{ toc += `<li><a href="#rev-${l.id}">${l.fil.split(':')[0]}</a></li>`; });
+  toc += '</ul>';
+
+  let html = `<h2>📖 Reviewer</h2><p class="en">Study guide for all 7 lessons</p>` + toc;
+
+  LESSONS.forEach(l=>{
+    html += `<section class="lesson" id="rev-${l.id}">
+      <div class="lesson-head">
+        <h2>${l.fil}</h2>
+        <span class="en">${l.en}</span>
+        ${badgeHtml(l.official)}
+      </div>
+      <div class="lesson-body">
+        <p>${l.intro}</p>
+        <p class="small-en">${l.introEn}</p>`;
+
+    if(l.terms){
+      html += `<table class="terms"><tr><th>Filipino</th><th>English</th><th>Paliwanag / Halimbawa</th></tr>`;
+      l.terms.forEach(t=>{ html += `<tr><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td></tr>`; });
+      html += `</table>`;
+    }
+    if(l.tandaan){
+      html += `<div class="tandaan"><strong>💡 Tandaan:</strong> ${l.tandaan}</div>`;
+    }
+    if(l.examples){
+      html += `<div class="examples"><strong>Halimbawa:</strong> ${l.examples}</div>`;
+    }
+    if(l.subsections){
+      l.subsections.forEach(sub=>{
+        html += `<h4>${sub.label} ${badgeHtml(sub.official)}</h4>
+          <table class="terms"><tr><th>Filipino</th><th>English</th><th>Paliwanag / Halimbawa</th></tr>`;
+        sub.terms.forEach(t=>{ html += `<tr><td>${t[0]}</td><td>${t[1]}</td><td>${t[2]}</td></tr>`; });
+        html += `</table>`;
+      });
+    }
+    html += `</div></section>`;
+  });
+
+  document.getElementById('reviewer-content').innerHTML = html;
+}
+
+/* =========================================================
+   RENDER: QUIZ TAB
+   ========================================================= */
+function renderQuiz(){
+  let html = '';
+  LESSONS.forEach(l=>{
+    html += `<div class="lesson-quiz-title">
+        <h3>${l.fil}</h3>
+        <span class="en">${l.en}</span>
+      </div>
+      <div class="lesson-quiz-body">
+      <div class="qgroup-label">A. Piliin ang Tamang Sagot <span class="small-en">(Multiple Choice)</span></div>`;
+
+    l.mc.forEach((item,idx)=>{
+      const [q, choices, correct, explain] = item;
+      html += `<div class="question" data-lesson="${l.id}" data-qindex="${idx}" data-correct="${correct}">
+        <div class="qtext">${idx+1}. ${q}</div>`;
+      choices.forEach((c,ci)=>{
+        html += `<label class="choice" data-ci="${ci}">
+          <input type="radio" name="mc-${l.id}-${idx}" value="${ci}">
+          <span>${c}</span>
+        </label>`;
+      });
+      html += `<div class="explain">💡 ${explain}</div></div>`;
+    });
+
+    html += `<div class="qgroup-label">B. Sagutang Maikli <span class="small-en">(Short Answer)</span></div>`;
+    l.sa.forEach((item,idx)=>{
+      const [q, suggested] = item;
+      html += `<div class="question">
+        <div class="qtext">${idx+1}. ${q}</div>
+        <textarea class="sa-answer" id="sa-${l.id}-${idx}" placeholder="Isulat ang iyong sagot dito... (Write your answer here...)"></textarea>
+        <div class="suggested" id="sug-${l.id}-${idx}"><strong>Mungkahing Sagot (Suggested Answer):</strong> ${suggested}</div>
+      </div>`;
+    });
+
+    html += `</div>`;
+  });
+  document.getElementById('quiz-content').innerHTML = html;
+}
+
+/* =========================================================
+   TABS
+   ========================================================= */
+function showTab(name){
+  document.getElementById('tab-reviewer').classList.toggle('active', name==='reviewer');
+  document.getElementById('tab-quiz').classList.toggle('active', name==='quiz');
+  document.getElementById('tab-btn-reviewer').classList.toggle('active', name==='reviewer');
+  document.getElementById('tab-btn-quiz').classList.toggle('active', name==='quiz');
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+/* =========================================================
+   GRADING
+   ========================================================= */
+function checkAnswers(){
+  let totalMC = 0, correctMC = 0;
+  const perLesson = {};
+
+  LESSONS.forEach(l=>{ perLesson[l.id] = {name:l.fil.split(':')[0], correct:0, total:l.mc.length}; });
+
+  document.querySelectorAll('.question[data-correct]').forEach(qDiv=>{
+    const lessonId = qDiv.getAttribute('data-lesson');
+    const correctIdx = parseInt(qDiv.getAttribute('data-correct'),10);
+    const choices = qDiv.querySelectorAll('.choice');
+    const selected = qDiv.querySelector('input[type=radio]:checked');
+    const selectedIdx = selected ? parseInt(selected.value,10) : -1;
+
+    totalMC++;
+    if(selectedIdx === correctIdx){
+      correctMC++;
+      perLesson[lessonId].correct++;
+    }
+
+    choices.forEach(ch=>{
+      const ci = parseInt(ch.getAttribute('data-ci'),10);
+      ch.classList.remove('correct','incorrect');
+      const oldTag = ch.querySelector('.fb-tag'); if(oldTag) oldTag.remove();
+      if(ci === correctIdx){
+        ch.classList.add('correct');
+        const tag = document.createElement('span'); tag.className='fb-tag correct'; tag.textContent='✔ Tamang Sagot';
+        ch.appendChild(tag);
+      } else if(ci === selectedIdx){
+        ch.classList.add('incorrect');
+        const tag = document.createElement('span'); tag.className='fb-tag incorrect'; tag.textContent='✘ Iyong Sagot';
+        ch.appendChild(tag);
+      }
+    });
+    const explain = qDiv.querySelector('.explain');
+    if(explain) explain.style.display = 'block';
+  });
+
+  document.querySelectorAll('.suggested').forEach(s=>{ s.style.display='block'; });
+
+  const name = document.getElementById('studentName').value.trim();
+  const greetName = name ? name : 'Mag-aaral';
+  const pct = totalMC ? Math.round((correctMC/totalMC)*100) : 0;
+
+  let rows = '';
+  LESSONS.forEach(l=>{
+    const pl = perLesson[l.id];
+    rows += `<tr><td>${pl.name}</td><td>${pl.correct} / ${pl.total}</td></tr>`;
+  });
+
+  const panel = document.getElementById('score-panel');
+  panel.innerHTML = `
+    <h3>Magaling, ${greetName}! 🎉</h3>
+    <div class="big">${correctMC} / ${totalMC}</div>
+    <p style="margin-top:6px;color:#EDEAD9;">Marka sa Multiple Choice: ${pct}% <span class="small-en" style="color:#CFE3D6;">(Multiple choice score)</span></p>
+    <p style="font-size:0.88rem;color:#CFE3D6;">Ang mga sagot sa Short Answer ay hindi awtomatikong sinusukat — makikita ang mungkahing sagot sa ilalim ng bawat tanong para sa magulang o guro na susuri. <span class="small-en">(Short answer items are not auto-scored — a suggested answer appears below each item for a parent or teacher to check.)</span></p>
+    <table class="score-table"><tr><th>Aralin</th><th>Marka</th></tr>${rows}</table>
+  `;
+  panel.classList.add('show');
+  panel.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function resetQuiz(){
+  document.querySelectorAll('input[type=radio]').forEach(r=>r.checked=false);
+  document.querySelectorAll('.sa-answer').forEach(t=>t.value='');
+  document.querySelectorAll('.suggested').forEach(s=>s.style.display='none');
+  document.querySelectorAll('.explain').forEach(e=>e.style.display='none');
+  document.querySelectorAll('.choice').forEach(c=>{
+    c.classList.remove('correct','incorrect');
+    const tag=c.querySelector('.fb-tag'); if(tag) tag.remove();
+  });
+  const panel = document.getElementById('score-panel');
+  panel.classList.remove('show');
+  panel.innerHTML='';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+renderReviewer();
+renderQuiz();
+</script>
+</body>
+</html>
